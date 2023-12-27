@@ -1,0 +1,17 @@
+{
+    "mqtt_server":              "mosquitto.lan",
+    "mqtt_port":                "1883",
+    "mqtt_user":                "mqttuser",
+    "mqtt_password":            "secretpassword",
+    "topic_cloud_cover":        "weather/cloudCover",
+    "topic_dew_point":          "weather/dewptc",            
+    "topic_event_rain":         "weather/eventrainmm",        
+    "topic_humidity":           "weather/humidity",              
+    "topic_pressure":           "weather/baromrelhpa",          
+    "topic_solar_radiation":    "weather/solarradiation",    
+    "topic_sqm":                "sqm",                     
+    "topic_temperature":        "weather/tempc",            
+    "topic_wind_direction":     "weather/winddir",      
+    "topic_wind_gust":          "weather/windgustkmh",      
+    "topic_wind_speed":         "weather/windspeedkmh"     
+}
