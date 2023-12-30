@@ -8,11 +8,6 @@ port = 5555
 location = 'Maurertown, Virginia, USA'  # Anything you want here
 verbose_driver_exceptions = true
 
-[device]
-can_reverse = true
-step_size = 1.0
-steps_per_sec = 6
-
 [logging]
 log_level = 'INFO'
 log_to_stdout = true
