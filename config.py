@@ -49,11 +49,25 @@ import logging
 #
 _dict = {}
 _dict = toml.load(f'{sys.path[0]}/config.toml')    # Errors here are fatal.
+_dict2 = {}
+try:
+    _dict2 = toml.load('/mqttoc/mqttoc-config.toml')
+except:
+    _dict2 = {}
+    # file is optional so it's ok if it isn't there
+
 def get_toml(sect: str, item: str):
-    if not _dict is {}:
-        return _dict[sect][item]
-    else:
-        return ''
+    setting = ''
+    s = None
+    try:
+        setting = _dict2[sect][item]
+    except:
+        try:
+            setting = _dict[sect][item]
+        except:
+            setting = ''
+
+    return setting
 
 class Config:
     """Device configuration in ``config.toml``"""
@@ -67,6 +81,24 @@ class Config:
     # --------------
     location: str = get_toml('server', 'location')
     verbose_driver_exceptions: bool = get_toml('server', 'verbose_driver_exceptions')
+    # --------------
+    # Device Section
+    # --------------
+    mqtt_server: str = get_toml('device', 'mqtt_server')
+    mqtt_port: int = get_toml('device', 'mqtt_port') 
+    mqtt_user: str = get_toml('device', 'mqtt_user')
+    mqtt_password: str = get_toml('device', 'mqtt_password')
+    topic_cloud_cover: str  = get_toml('device', 'topic_cloud_cover')
+    topic_dew_point: str = get_toml('device', 'topic_dew_point')
+    topic_event_rain: str = get_toml('device', 'topic_event_rain')
+    topic_humidity: str = get_toml('device', 'topic_humidity')
+    topic_pressure: str = get_toml('device', 'topic_pressure')
+    topic_solar_radiation: str = get_toml('device', 'topic_solar_radiation')
+    topic_sqm: str = get_toml('device', 'topic_sqm')
+    topic_temperature: str = get_toml('device', 'topic_temperature')
+    topic_wind_direction: str = get_toml('device', 'topic_wind_direction')
+    topic_wind_gust: str = get_toml('device', 'topic_wind_gust')
+    topic_wind_speed: str = get_toml('device', 'topic_wind_speed')
     # ---------------
     # Logging Section
     # ---------------

@@ -8,8 +8,7 @@ import paho.mqtt.client as mqtt
 import time
 from logging import Logger
 from threading import Lock
-from pathlib import Path
-import json
+from config import Config
 
 class MQTTObservingConditions:
 
@@ -57,40 +56,34 @@ class MQTTObservingConditions:
         self.logger = logger
         self._connected = False
         self._lock = Lock()
-        # load configuration
-        path = Path("/mqttoc/mqttconfig.json")
-        if not path.exists():
-            path = Path("mqttconfig.json")
-        contents = path.read_text()
-        config = json.loads(contents)
         # MQTT client
         self.client = mqtt.Client("MQTTObservingConditions", userdata = self)
-        self.client.username_pw_set(config["mqtt_user"], config["mqtt_password"])
-        self.client.connect(config["mqtt_server"], int(config["mqtt_port"]))
+        self.client.username_pw_set(Config.mqtt_user, Config.mqtt_password)
+        self.client.connect(Config.mqtt_server, Config.mqtt_port)
         # add callbacks
-        self.client.message_callback_add(config["topic_cloud_cover"], on_message_cloud_cover)  
-        self.client.message_callback_add(config["topic_dew_point"], on_message_dew_point)  
-        self.client.message_callback_add(config["topic_event_rain"], on_message_event_rain)        
-        self.client.message_callback_add(config["topic_humidity"], on_message_hummidity)     
-        self.client.message_callback_add(config["topic_pressure"], on_message_pressure)   
-        self.client.message_callback_add(config["topic_solar_radiation"], on_message_solar_radiation)
-        self.client.message_callback_add(config["topic_sqm"], on_message_sqm)
-        self.client.message_callback_add(config["topic_temperature"], on_message_temperature)
-        self.client.message_callback_add(config["topic_wind_direction"], on_message_wind_direction)
-        self.client.message_callback_add(config["topic_wind_gust"], on_message_wind_gust)
-        self.client.message_callback_add(config["topic_wind_speed"], on_message_wind_speed)
+        self.client.message_callback_add(Config.topic_cloud_cover, on_message_cloud_cover)  
+        self.client.message_callback_add(Config.topic_dew_point, on_message_dew_point)  
+        self.client.message_callback_add(Config.topic_event_rain, on_message_event_rain)        
+        self.client.message_callback_add(Config.topic_humidity, on_message_hummidity)     
+        self.client.message_callback_add(Config.topic_pressure, on_message_pressure)   
+        self.client.message_callback_add(Config.topic_solar_radiation, on_message_solar_radiation)
+        self.client.message_callback_add(Config.topic_sqm, on_message_sqm)
+        self.client.message_callback_add(Config.topic_temperature, on_message_temperature)
+        self.client.message_callback_add(Config.topic_wind_direction, on_message_wind_direction)
+        self.client.message_callback_add(Config.topic_wind_gust, on_message_wind_gust)
+        self.client.message_callback_add(Config.topic_wind_speed, on_message_wind_speed)
         # subscriptions
-        self.client.subscribe(config["topic_cloud_cover"])
-        self.client.subscribe(config["topic_dew_point"])     
-        self.client.subscribe(config["topic_event_rain"])   
-        self.client.subscribe(config["topic_humidity"])
-        self.client.subscribe(config["topic_pressure"])
-        self.client.subscribe(config["topic_solar_radiation"])
-        self.client.subscribe(config["topic_sqm"])
-        self.client.subscribe(config["topic_temperature"])
-        self.client.subscribe(config["topic_wind_direction"])
-        self.client.subscribe(config["topic_wind_gust"])
-        self.client.subscribe(config["topic_wind_speed"])
+        self.client.subscribe(Config.topic_cloud_cover)
+        self.client.subscribe(Config.topic_dew_point)     
+        self.client.subscribe(Config.topic_event_rain)   
+        self.client.subscribe(Config.topic_humidity)
+        self.client.subscribe(Config.topic_pressure)
+        self.client.subscribe(Config.topic_solar_radiation)
+        self.client.subscribe(Config.topic_sqm)
+        self.client.subscribe(Config.topic_temperature)
+        self.client.subscribe(Config.topic_wind_direction)
+        self.client.subscribe(Config.topic_wind_gust)
+        self.client.subscribe(Config.topic_wind_speed)
         # start handling subscriptions
         self.client.loop_start()
     
