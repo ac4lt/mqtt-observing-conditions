@@ -39,7 +39,7 @@ maxdev = 0                      # Single instance
 class ObservingconditionsMetadata:
     """ Metadata describing the Observingconditions Device. Edit for your device"""
     Name = 'MQTT Observing Conditions'
-    Version = '1.1.1'
+    Version = '1.2.1'
     Description = 'Get current observing conditions from weather data via MQTT subscription'
     DeviceType = 'Observingconditions'
     DeviceID = '6cf676ff-22c1-4f4b-992a-5779d94b692b' # https://guidgenerator.com/online-guid-generator.aspx

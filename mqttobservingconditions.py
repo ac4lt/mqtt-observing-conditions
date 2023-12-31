@@ -84,6 +84,9 @@ class MQTTObservingConditions:
         self.client.subscribe(Config.topic_wind_direction)
         self.client.subscribe(Config.topic_wind_gust)
         self.client.subscribe(Config.topic_wind_speed)
+        # publish that we are alive
+        self.client.publish("client/mqtt-observing-conditions", True, retain=True)
+        self.client.will_set("client/mqtt-observing-conditions", False, retain=True)        
         # start handling subscriptions
         self.client.loop_start()
     
@@ -284,6 +287,12 @@ class MQTTObservingConditions:
         return res     
     
 # callbacks    
+def on_connect(client, userdata, flags, rc):
+    userdata.logger.info(f"[mqtt] connected rc = {rc}, flags={flags}")
+
+def on_disconnect(client, userdata, rc):
+    userdata.logger.info(f"[mqtt] disconnected, rc={rc}")
+    
 def on_message_cloud_cover(client, userdata, msg):
     userdata._lock.acquire()
     userdata._cloudCover = float(msg.payload.decode('utf-8'))
