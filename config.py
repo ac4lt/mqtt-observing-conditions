@@ -51,7 +51,10 @@ _dict = {}
 _dict = toml.load(f'{sys.path[0]}/config.toml')    # Errors here are fatal.
 _dict2 = {}
 try:
-    _dict2 = toml.load('/mqttoc/mqttoc-config.toml')
+    # ltf - this file, if it exists can override or supplement definitions in the normal config.tom.
+    # this facilitates putting the driver in a docker container where installation specific
+    # configuration can be put in a file that isn't pulled from a repository
+    _dict2 = toml.load('/alpyca/config.toml')
 except:
     _dict2 = {}
     # file is optional so it's ok if it isn't there
